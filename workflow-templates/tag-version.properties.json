@@ -1,0 +1,7 @@
+{
+    "name": "Tag and release Workflow",
+    "description": "Tag the commit and make github release on merging changelogs PR",
+    "iconName": "edx-workflow-template-icon",
+    "categories": [],
+    "filePatterns": []
+}

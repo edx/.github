@@ -1,0 +1,43 @@
+name: Generate Changelogs
+
+on:
+  - workflow_call
+
+jobs:
+  check_version:
+    runs-on: ubuntu-20.04
+    outputs:
+      output1: ${{ steps.gitversion.outputs.version }}
+      output2: ${{ steps.latesttag.outputs.tag }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install package
+      run: pip install python-semantic-release
+
+    - name: Get Commits
+      run: git log --oneline
+
+  # Make sure you've added version_variable in setup.cfg
+    - name: Determine Version
+      id: gitversion
+      run: echo "::set-output name=version::$(semantic-release print-version)"
+
+    - name: Get Latest Tag
+      id: latesttag
+      run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+
+  update_changelogs:
+    needs: check_version
+    runs-on: ubuntu-20.04
+    if: ${{ !(needs.check_version.outputs.output1 == null) || (needs.check_version.outputs.output1 != needs.check_version.outputs.output2)}}
+    steps:
+    - uses: edx/.github/.github/actions/changelogs-generator@jawayria/semantic-release
+      with:
+        repo_name: ${{ github.repository }}
+        version: ${{ needs.check_version.outputs.output1 }}

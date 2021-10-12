@@ -1,0 +1,7 @@
+{
+    "name": "Changelogs Workflow",
+    "description": "Generate changelogs and bump version on push at master branch",
+    "iconName": "edx-workflow-template-icon",
+    "categories": [],
+    "filePatterns": []
+}

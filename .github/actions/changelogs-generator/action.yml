@@ -1,0 +1,59 @@
+name: Generate Changelogs
+description: 'Bump Version and Generate Changelogs'
+inputs:
+  repo_name:
+    description: 'Name of the repo in which action is called'
+    required: true
+  version:
+    description: 'New version number'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        repository: ${{ inputs.repo_name }}
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install package
+      shell: bash
+      run: pip install python-semantic-release
+
+    - name: Git setup
+      shell: bash
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "github-actions"
+
+    # Make sure you've added version_variable in setup.cfg 
+    - name: Update Version
+      shell: bash
+      run: semantic-release version
+
+    - name: Install pandoc
+      shell: bash
+      run: brew install pandoc
+
+    # Make sure you've added '.. <New Logs>' in CHANGELOGS.rst
+    - name: Get Changelog
+      id: changelogs
+      shell: bash
+      run: python ${{ github.action_path }}/changelogs.py ${{inputs.version}}
+
+    - name: delete temp files
+      shell: bash
+      run: |
+        rm temp.md
+        rm temp.rst
+    
+    # Make sure you've added commit_author in setup.cfg
+    - name: create pull request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        commit-message: 'docs: Bump the Version and update Changelogs'
+        branch: ${{ inputs.version }}-update-changelogs
+        title: Upgrade the version to ${{ inputs.version }}

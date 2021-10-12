@@ -1,0 +1,61 @@
+name: Tag the commit
+
+on:
+  - workflow_call
+
+jobs:
+  tag_release:
+    if: ${{ github.event.pull_request.merged && contains(github.head_ref,'-update-changelogs')}}
+    runs-on: ubuntu-20.04
+    outputs:
+      output1: ${{ steps.gitversion.outputs.version }}
+      output2: ${{ steps.changedfiles.outputs.files }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install package
+      run: pip install python-semantic-release
+
+    - name: save files
+      id: changedfiles
+      run: |
+        URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+        FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
+        echo "::set-output name=files::$(echo $FILES | sed 's/ //g')"
+
+    - name: run files cmd
+      run: |
+        URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+        FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
+        echo $FILES
+
+    - name: get files
+      run: echo ${{ steps.changedfiles.outputs.files }}
+
+    - name: Determine Version
+      if: ${{ contains(steps.changedfiles.outputs.files, 'CHANGELOG.rst') }}
+      id: gitversion
+      run: echo "::set-output name=version::$(semantic-release print-version --current)"
+
+    - name: Tag
+      if: ${{ contains(steps.changedfiles.outputs.files, 'CHANGELOG.rst') }}
+      id: latesttag
+      run: |
+        git tag ${{ steps.gitversion.outputs.version }}
+        git push --tags
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.gitversion.outputs.version }}
+        release_name: Release ${{ steps.gitversion.outputs.version }}
+        body: For changes made in this release, visit <a href="https://github.com/${{ github.repository }}/blob/master/CHANGELOG.rst">changelogs file</a>
+        draft: false
+        prerelease: false
