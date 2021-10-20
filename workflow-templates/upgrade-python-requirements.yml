@@ -1,4 +1,4 @@
-name: Schedule Upgrade Requirements
+name: Upgrade Requirements
 
 on:
   schedule:
