@@ -1,0 +1,9 @@
+name: Schedule Upgrade Requirements
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+
+jobs:
+  call-upgrade-python-requirements-workflow:
+    uses: /workflow-templates/upgrade-python-requirements.yml
