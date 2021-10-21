@@ -9,22 +9,12 @@ on:
         description: "Target branch to create requirements PR against"
         required: true
         default: "master"
-      team_reviewers:
-        description: "PR Reviewing Team"
-        required: false
-        default: "arbi-bom@edx.org"
-        type: string
-      send_failure_email_to:
-        description: "Failure Email Will be sent to this email address"
-        required: false
-        default: "arbi-bom@edx.org"
-        type: string
 
 jobs:
   call-upgrade-python-requirements-workflow:
     with:
       branch: ${{ github.event.inputs.branch }}
-      team_reviewers: ${{ github.event.inputs.team_reviewers }}
-      send_failure_email_to: ${{ github.event.inputs.send_failure_email_to }}
+      team_reviewers: "arbi_bom"
+      send_failure_email_to: "arbi-bom@edx.org"
 
     uses: edx/.github/.github/workflows/upgrade-python-requirements.yml@master
