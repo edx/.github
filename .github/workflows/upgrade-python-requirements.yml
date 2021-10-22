@@ -18,6 +18,11 @@ on:
         required: false
         default: "arbi-bom@edx.org"
         type: string
+      send_success_notification:
+        description: "Boolean Flag to decide whether to send email on successful execution of the workflow"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   upgrade_requirements:
@@ -71,6 +76,19 @@ jobs:
           username: ${{secrets.EDX_SMTP_USERNAME}}
           password: ${{secrets.EDX_SMTP_PASSWORD}}
           subject: Upgrade python requirements workflow failed in ${{github.repository}}
-          to: ${{ inputs.send_failure_email_to }}
+          to: ${{ inputs.email_address }}
           from: github-actions <github-actions@edx.org>
           body: Upgrade python requirements workflow in ${{github.repository}} failed! For details see "github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Send success notification
+        if: ${{ inputs.send_success_notification }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: email-smtp.us-east-1.amazonaws.com
+          server_port: 465
+          username: ${{secrets.EDX_SMTP_USERNAME}}
+          password: ${{secrets.EDX_SMTP_PASSWORD}}
+          subject: Upgrade python requirements workflow executed successfully in ${{github.repository}}
+          to: ${{ inputs.email_address }}
+          from: github-actions <github-actions@edx.org>
+          body: Upgrade python requirements workflow executed in {{github.repository}}. For details see "github.com/${{ github.repository }}/pulls"

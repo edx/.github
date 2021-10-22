@@ -16,5 +16,6 @@ jobs:
       branch: ${{ github.event.inputs.branch }}
       team_reviewers: "arbi_bom"
       email_address: "arbi-bom@edx.org"
+      send_success_notification: false
 
     uses: edx/.github/.github/workflows/upgrade-python-requirements.yml@master
