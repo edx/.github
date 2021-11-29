@@ -20,7 +20,6 @@ runs:
         python-version: '3.8'
 
     - name: Install package
-      shell: bash
       run: pip install python-semantic-release
 
     - name: Git setup
