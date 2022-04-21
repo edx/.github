@@ -8,6 +8,9 @@ import sys
 from datetime import date
 import fileinput
 import pypandoc
+from pypandoc.pandoc_download import download_pandoc
+
+download_pandoc()
 
 # Save new changelogs in temp.md
 changelogs_cmd = "semantic-release changelog"
