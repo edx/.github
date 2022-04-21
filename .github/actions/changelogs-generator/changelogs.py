@@ -1,3 +1,7 @@
+"""
+Script to generate a changelogs, convert to rst format and append in CHANGELOG.rst
+"""
+
 import re
 import subprocess
 import sys
@@ -19,15 +23,15 @@ output = subprocess.check_output(pandoc_cmd.split())
 with open('temp.rst') as f:
     changelogs = f.readlines()
 
-for line_num in range(len(changelogs)):
-    obj = re.search(r'``[a-zA-Z0-9]{7}``',  changelogs[line_num])
+for line_num, line in enumerate(changelogs):
+    obj = re.search(r'``[a-zA-Z0-9]{7}``',  line)
     if obj:
-        changelogs[line_num] = re.sub(r'``[a-zA-Z0-9]{7}``', obj.group().split('`')[2], changelogs[line_num])
+        changelogs[line_num] = re.sub(r'``[a-zA-Z0-9]{7}``', obj.group().split('`')[2], line)
 changelogs = "".join(changelogs)
 
 
 # append the changelogs in CHANGELOG.rst
-for line in fileinput.FileInput("CHANGELOG.rst", inplace=1):
+for line in fileinput.FileInput("CHANGELOG.rst", inplace=True):
     if line.startswith(".. <New logs>"):
         line = line.replace(line, line+"\n"+changelogs)
         print(line)

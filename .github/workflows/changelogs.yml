@@ -1,3 +1,6 @@
+# Uses python-semantic-release package to determine whether a version bump is required
+# and calls the changelogs-generator actions in case of version bump
+
 name: Generate Changelogs
 
 on:

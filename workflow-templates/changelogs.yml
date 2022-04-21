@@ -1,4 +1,4 @@
-
+# Uses the changelogs reusable workflow to generate changelogs
 name: Generate changelogs
 
 on:

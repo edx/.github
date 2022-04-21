@@ -1,4 +1,4 @@
-
+# Uses the tag-version reusable workflow to create a tag and a github release
 name: Tag and release
 
 on:

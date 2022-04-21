@@ -1,3 +1,5 @@
+# Creates a tag and a github release for new version
+
 name: Tag the commit
 
 on:

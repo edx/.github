@@ -1,3 +1,5 @@
+# A composite github action to add new changelogs in CHANGELOG.rst and create PR
+
 name: Generate Changelogs
 description: 'Bump Version and Generate Changelogs'
 inputs:
@@ -36,7 +38,7 @@ runs:
 
     - name: Install pandoc
       shell: bash
-      run: brew install pandoc
+      run: pip install pandoc
 
     # Make sure you've added '.. <New Logs>' in CHANGELOGS.rst
     - name: Get Changelog
@@ -46,9 +48,7 @@ runs:
 
     - name: delete temp files
       shell: bash
-      run: |
-        rm temp.md
-        rm temp.rst
+      run: rm temp.md temp.rst
     
     # Make sure you've added commit_author in setup.cfg
     - name: create pull request
