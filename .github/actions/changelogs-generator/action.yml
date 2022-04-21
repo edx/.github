@@ -12,14 +12,19 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        repository: ${{ inputs.repo_name }}
     - name: setup python
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
+
+    - name: Install pypandoc
+      shell: bash
+      run: pip install pypandoc
+
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        repository: ${{ inputs.repo_name }}
 
     - name: Install package
       shell: bash
@@ -35,10 +40,6 @@ runs:
     - name: Update Version
       shell: bash
       run: semantic-release version
-
-    - name: Install pypandoc
-      shell: bash
-      run: pip install pypandoc
 
     # Make sure you've added '.. <New Logs>' in CHANGELOGS.rst
     - name: Get Changelog
