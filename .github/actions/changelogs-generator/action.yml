@@ -36,9 +36,9 @@ runs:
       shell: bash
       run: semantic-release version
 
-    - name: Install pandoc
+    - name: Install pypandoc
       shell: bash
-      run: pip install pandoc
+      run: pip install pypandoc
 
     # Make sure you've added '.. <New Logs>' in CHANGELOGS.rst
     - name: Get Changelog

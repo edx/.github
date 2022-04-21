@@ -7,6 +7,7 @@ import subprocess
 import sys
 from datetime import date
 import fileinput
+import pypandoc
 
 # Save new changelogs in temp.md
 changelogs_cmd = "semantic-release changelog"
@@ -17,8 +18,9 @@ with open('temp.md', 'w') as file:
     file.write(output)
 
 # Convert the changelogs to rst
-pandoc_cmd = "pandoc temp.md -f markdown_strict -t rst -o temp.rst"
-output = subprocess.check_output(pandoc_cmd.split())
+#pandoc_cmd = "pandoc temp.md -f markdown_strict -t rst -o temp.rst"
+#output = subprocess.check_output(pandoc_cmd.split())
+output = pypandoc.convert_file('temp.md', 'rst', outputfile='temp.rst')
 
 with open('temp.rst') as f:
     changelogs = f.readlines()
