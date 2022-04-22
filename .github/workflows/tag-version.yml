@@ -29,15 +29,6 @@ jobs:
         FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
         echo "::set-output name=files::$(echo $FILES | sed 's/ //g')"
 
-    - name: run files cmd
-      run: |
-        URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-        FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
-        echo $FILES
-
-    - name: get files
-      run: echo ${{ steps.changedfiles.outputs.files }}
-
     - name: Determine Version
       if: ${{ contains(steps.changedfiles.outputs.files, 'CHANGELOG.rst') }}
       id: gitversion
