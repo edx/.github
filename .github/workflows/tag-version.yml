@@ -48,6 +48,6 @@ jobs:
       with:
         tag_name: ${{ steps.gitversion.outputs.version }}
         release_name: Release ${{ steps.gitversion.outputs.version }}
-        body: For changes made in this release, visit <a href="https://github.com/${{ github.repository }}/blob/master/CHANGELOG.rst">changelogs file</a>
+        body: For changes made in this release, visit <a href="https://github.com/${{ github.repository }}/blob/$default-branch/CHANGELOG.rst">changelogs file</a>
         draft: false
         prerelease: false
