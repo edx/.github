@@ -11,3 +11,5 @@ on:
 jobs:
   tag-version:
     uses: edx/.github/.github/workflows/tag-version.yml@master
+    with:
+      branch: $default-branch
