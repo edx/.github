@@ -47,8 +47,8 @@ jobs:
       if: ${{ contains(steps.changedfiles.outputs.files, 'CHANGELOG.rst') }}
       id: latesttag
       uses: actions-ecosystem/action-push-tag@v1
-        with:
-          tag: ${{ steps.gitversion.outputs.version }}
+      with:
+        tag: ${{ steps.gitversion.outputs.version }}
 #      run: |
 #        git tag ${{ steps.gitversion.outputs.version }}
 #        git push --tags
