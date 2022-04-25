@@ -20,6 +20,9 @@ jobs:
       output2: ${{ steps.changedfiles.outputs.files }}
     steps:
     - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.PAT_TAG_PUSH }}
+
     - name: setup python
       uses: actions/setup-python@v2
       with:
@@ -42,8 +45,6 @@ jobs:
 
     - name: Tag
       if: ${{ contains(steps.changedfiles.outputs.files, 'CHANGELOG.rst') }}
-      with:
-        token: ${{ secrets.PAT_TAG_PUSH }}
       run: |
         git tag ${{ steps.gitversion.outputs.version }}
         git push --tags
