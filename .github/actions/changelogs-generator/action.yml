@@ -49,7 +49,7 @@ runs:
 
     - name: delete temp files
       shell: bash
-      run: rm temp.md temp.rst
+      run: rm temp.md temp.rst pandoc-2.*.deb
     
     # Make sure you've added commit_author in setup.cfg
     - name: create pull request

@@ -17,13 +17,13 @@ changelogs_cmd = "semantic-release changelog"
 output = subprocess.check_output(changelogs_cmd.split())
 output = "## [" + sys.argv[1] + "] - " + str(date.today()) + "\n"+output.decode("utf-8")
 
-#with open('temp.md', 'w') as file:
-#    file.write(output)
+with open('temp.md', 'w') as file:
+    file.write(output)
 
 # Convert the changelogs to rst
 #pandoc_cmd = "pandoc temp.md -f markdown_strict -t rst -o temp.rst"
 #output = subprocess.check_output(pandoc_cmd.split())
-output = pypandoc.convert_file(output, 'rst', format='md')
+output = pypandoc.convert_file('temp.md', 'rst', outputfile='temp.rst')
 
 with open('temp.rst') as f:
     changelogs = f.readlines()
