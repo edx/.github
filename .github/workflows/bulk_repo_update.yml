@@ -83,10 +83,9 @@ jobs:
         repos: ${{fromJson(needs.repos_list.outputs.output1)}}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
             repository: ${{ github.event.inputs.organization}}/${{ matrix.repos }}
-            ref: 'master'
             token: ${{ secrets.requirements_bot_github_token }}
 
       - name: setup python
