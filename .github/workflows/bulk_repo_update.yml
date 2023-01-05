@@ -87,6 +87,12 @@ jobs:
         with:
             repository: ${{ github.event.inputs.organization}}/${{ matrix.repos }}
             token: ${{ secrets.requirements_bot_github_token }}
+            fetch-depth: 0
+
+      - name: Get Default Branch of checkedout repo
+        run: |
+          branch=$(git branch --show-current)
+          echo "BRANCH=$branch" >> $GITHUB_ENV
 
       - name: setup python
         uses: actions/setup-python@v2
@@ -97,10 +103,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          
-      - name: Set Checked out Branch name
-        id: branch-name
-        run: echo "BRANCH=${{ github.head_ref || github.ref_name }}" >> $GITHUB_OUTPUT
 
       - name: install packages
         if: ${{ github.event.inputs.packages }}
@@ -131,7 +133,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/testeng-ci
           python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
-          --target-branch="${{ steps.branch-name.outputs.BRANCH }}" --base-branch-name="${{ github.event.inputs.branch }}" \
+          --target-branch="${{ env.BRANCH }}" --base-branch-name="${{ github.event.inputs.branch }}" \
           --commit-message="${{ github.event.inputs.commit_message }}" \
           --pr-title="${{ github.event.inputs.commit_message }}"  \
           --pr-body="${{ github.event.inputs.pr_body }}"  --user-reviewers=${{ github.actor }} \
