@@ -1,0 +1,66 @@
+name: merge-upgrade-prs
+on:
+  - pull_request:
+  - schedule:
+      cron: "0 7 * * *"
+jobs:
+  get-list:
+    runs-on: ubuntu-20.04
+    
+    outputs:
+      urls: ${{ steps.generate-matrix.outputs.urls }}
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: setup tubular
+        run: |
+          git clone https://github.com/openedx/tubular.git
+          cd tubular
+          pip install -e .
+      - name: Generate Matrix
+        id: generate-matrix
+        run: |
+          urls=( $(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;') )
+          echo ::set-output name=urls::${urls}
+  upgrade_requirements:
+    runs-on: ubuntu-20.04
+    needs:
+      - get-list
+    strategy:
+      matrix:
+        urls: ${{ fromJSON(needs.get-list.outputs.urls) }}
+
+    steps:
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: setup tubular
+        run: |
+          git clone https://github.com/openedx/tubular.git
+          cd tubular
+          pip install -e .
+      - name: extract org name, repo name and pr number
+      - run: |
+          url="${{ matrix.url }}"
+      
+          # Extract the organization name
+          org_name=$(echo $url | awk -F/ '{print $4}')
+
+          # Extract the repo name
+          repo_name=$(echo $url | awk -F/ '{print $5}')
+
+          # Extract the pull request number
+          pr_number=$(echo $url | awk -F/ '{print $7}')
+
+      - name: run command
+        env:
+          GIT_TOKEN: ${{ github.token }} 
+        run: |
+          cd tubular
+          check_pr_tests_status.py --org $org_name --repo $repo_name --pr_number $pr_number
