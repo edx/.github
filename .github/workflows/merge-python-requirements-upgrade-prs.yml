@@ -71,16 +71,22 @@ jobs:
       
           # Extract the organization name
           org_name=$(echo $url | awk -F/ '{print $4}')
+          
 
           # Extract the repo name
           repo_name=$(echo $url | awk -F/ '{print $5}')
 
           # Extract the pull request number
           pr_number=$(echo $url | awk -F/ '{print $7}')
+          
+          #print out
+          echo "Organization: $org_name"
+          echo "Repo: $repo_name"
+          echo "PR: $pr_number"
 
       - name: run command
         env:
           GIT_TOKEN: ${{ github.token }} 
         run: |
           cd tubular
-          check_pr_tests_status.py --org $org_name --repo $repo_name --pr_number $pr_number
+          check_pr_tests_status.py --org "$org_name" --repo "$repo_name" --pr_number "$pr_number"
