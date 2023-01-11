@@ -40,13 +40,13 @@ jobs:
         run: |
           echo "urls=$(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;')" >> $GITHUB_OUTPUT
   
-  upgrade_requirements:
+  merge_pr:
     runs-on: ubuntu-20.04
     needs:
       - get-list
     strategy:
       matrix:
-        urls: ${{ fromJSON(needs.get-list.outputs.urls) }}
+        url: ${{ fromJSON(needs.get-list.outputs.urls) }}
 
     steps:
 
