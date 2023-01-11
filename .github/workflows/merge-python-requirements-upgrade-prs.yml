@@ -30,7 +30,7 @@ jobs:
         id: generate-matrix
         run: |
           urls=( $(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;') )
-          echo "urls=${{ toJSON($urls) }}" >> $GITHUB_OUTPUT
+          echo "urls=${{ toJSON("${urls}") }}" >> $GITHUB_OUTPUT
   
   upgrade_requirements:
     runs-on: ubuntu-20.04
