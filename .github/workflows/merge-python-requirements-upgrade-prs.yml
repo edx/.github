@@ -27,11 +27,15 @@ jobs:
           cd tubular
           pip install -e .
       - name: Run script
+        env:
+          GIT_TOKEN: ${{ github.token }}
         run: |
           get_ready_to_merge_prs.py --org openedx
           get_ready_to_merge_prs.py --org openedx | sed '1d;2d;'
           echo "urls=$(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;')" >> $GITHUB_OUTPUT
       - name: Generate Matrix
+        env:
+          GIT_TOKEN: ${{ github.token }}
         id: generate-matrix
         run: |
           echo "urls=$(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;')" >> $GITHUB_OUTPUT
