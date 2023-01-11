@@ -29,9 +29,7 @@ jobs:
       - name: Generate Matrix
         id: generate-matrix
         run: |
-          urls=( $(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;') )
-          jsonUrls="$(jq --compact-output --null-input '$ARGS.positional' --args -- "${urls[@]}")"
-          echo "urls=$jsonUrls" >> $GITHUB_OUTPUT
+          echo "urls=$(get_ready_to_merge_prs.py --org openedx | sed '1d;2d;')" >> $GITHUB_OUTPUT
   
   upgrade_requirements:
     runs-on: ubuntu-20.04
