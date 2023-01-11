@@ -47,7 +47,7 @@ jobs:
           cd tubular
           pip install -e .
       - name: extract org name, repo name and pr number
-      - run: |
+        run: |
           url="${{ matrix.url }}"
       
           # Extract the organization name
