@@ -1,8 +1,9 @@
 name: merge-upgrade-prs
+
 on:
-  - pull_request:
-  - schedule:
-      cron: "0 7 * * *"
+  pull_request:
+  schedule:
+    - cron: "0 7 * * *"
 jobs:
   get-list:
     runs-on: ubuntu-20.04
