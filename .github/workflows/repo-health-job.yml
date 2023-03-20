@@ -1,0 +1,20 @@
+name: Repo Health Workflow Call
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  call-repo-health-job-workflow:
+    uses: usamasadiq/openedx-github/.github/workflows/repo-health-job.yml@master
+    with:
+      ORG_NAMES: "edx openedx"  
+      REPOS_TO_IGNORE: "clamps-ghsa-c4rq-qwgr-pj5h"
+      TARGET_REPO_TO_STORE_REPORTS: "edx/repo-health-data"
+      REPO_HEALTH_GOOGLE_CREDS_FILE: ${{ secrets.REPO_HEALTH_GOOGLE_CREDS_FILE }}
+      REPO_HEALTH_REPOS_WORKSHEET_ID: ${{ secrets.REPO_HEALTH_REPOS_WORKSHEET_ID }}
+      REPO_HEALTH_OWNERSHIP_SPREADSHEET_URL: ${{ secrets.REPO_HEALTH_OWNERSHIP_SPREADSHEET_URL }}
+    secrets:
+      REPO_HEALTH_BOT_TOKEN: ${{ secrets.repo_health_bot_token }}
+      REPO_HEALTH_BOT_EMAIL: "repo_health_bot@edx.org"
