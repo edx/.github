@@ -1,0 +1,17 @@
+name: Merge Python Requirements Upgrade PRs for EDX org
+
+on:
+  schedule:
+    # will run the job at 10 AM every day (UTC),
+    # https://crontab.guru/#0_10_*_*_*
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+
+jobs:
+  call-automerge-prs-workflow:
+    uses: openedx/.github/.github/workflows/merge-python-requirements-upgrade-prs.yml@master
+    with:
+      ORG_NAME: "edx"
+    secrets:
+      REQUIREMENTS_BOT_GITHUB_TOKEN: ${{ secrets.requirements_bot_github_token }}
