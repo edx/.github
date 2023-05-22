@@ -10,7 +10,7 @@ on:
 
 jobs:
   call-automerge-prs-workflow:
-    uses: openedx/.github/workflows/merge-python-requirements-upgrade-prs.yml@master
+    uses: openedx/.github/.github/workflows/merge-python-requirements-upgrade-prs.yml@master
     with:
       ORG_NAME: "edx"
     secrets:
