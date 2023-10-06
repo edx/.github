@@ -1,0 +1,12 @@
+# Mapping from repo to Jira.
+defaults:
+  - type: Task
+repos:
+  - name: openedx/edx-platform
+    project: ARCHBOM
+    type: Task
+  - name: nedbat/webhook-testing
+    project: ARCHBOM
+  - name: "*"
+    project: ARCHBOM
+    type: Task
