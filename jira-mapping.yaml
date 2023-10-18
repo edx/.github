@@ -1,6 +1,6 @@
 # Mapping from repo to Jira.
 defaults:
-  - type: Task
+  type: Task
 repos:
   - name: openedx/edx-platform
     project: ARCHBOM
