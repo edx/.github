@@ -1,0 +1,12 @@
+# Mapping from repo to Jira for the production OSPR bot.
+#
+# Jira projects the bot can write to:
+# APER, ARCHBOM, AU, BOM, ROLES, TNL
+
+defaults:
+  type: Task
+repos:
+  - name: openedx/edx-platform
+    project: ARCHBOM
+  - name: "*"
+    project: ARCHBOM
