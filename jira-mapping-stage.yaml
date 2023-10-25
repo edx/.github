@@ -1,0 +1,12 @@
+# Mapping from repo to Jira for the staging OSPR bot.
+# See the production file for more details.
+
+defaults:
+  type: Task
+repos:
+  - name: openedx/edx-platform
+    project: ARCHBOM
+  - name: nedbat/webhook-testing    # For Ned to test the bot on stage
+    project: ARCHBOM
+  - name: "*"
+    project: ARCHBOM
