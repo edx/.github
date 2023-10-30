@@ -8,5 +8,3 @@ repos:
     project: ARCHBOM
   - name: nedbat/webhook-testing    # For Ned to test the bot on stage
     project: ARCHBOM
-  - name: "*"
-    project: ARCHBOM
