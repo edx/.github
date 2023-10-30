@@ -5,8 +5,50 @@
 
 defaults:
   type: Task
+
 repos:
-  - name: openedx/edx-platform
-    project: ARCHBOM
-  - name: "*"
-    project: ARCHBOM
+  # Aperture
+  - name: openedx/credentials
+    project: APER
+  - name: openedx/credentials-themes
+    project: APER
+  - name: openedx/django-wiki
+    project: APER
+  - name: openedx/edx-milestones
+    project: APER
+  - name: openedx/frontend-app-learner-record
+    project: APER
+  - name: openedx/frontend-app-profile
+    project: APER
+  - name: openedx/frontend-app-programs-dashboard
+    project: APER
+
+  # T&L
+  - name: openedx/blockstore
+    project: TNL
+  - name: openedx/codejail
+    project: TNL
+  - name: openedx/edx-organizations
+    project: TNL
+  - name: openedx/frontend-app-course-authoring
+    project: TNL
+  - name: openedx/frontend-app-library-authoring
+    project: TNL
+  - name: openedx/frontend-components-tinymce-advanced-plugins
+    project: TNL
+  - name: openedx/frontend-lib-content-components
+    project: TNL
+  - name: openedx/opaque-keys
+    project: TNL
+  - name: openedx/openedx-calc
+    project: TNL
+  - name: openedx/openedx-chem
+    project: TNL
+  - name: openedx/openedx-demo-course
+    project: TNL
+  - name: openedx/studio-frontend
+    project: TNL
+  - name: openedx/tinymce-language-selector
+    project: TNL
+  - name: openedx/xblock
+    project: TNL
