@@ -23,6 +23,30 @@ repos:
   - name: openedx/frontend-app-programs-dashboard
     project: APER
 
+  # Aurora
+  - name: openedx/edx-bulk-grades
+    project: AU
+  - name: openedx/edx-notes-api
+    project: AU
+  - name: openedx/edx-ora2
+    project: AU
+  - name: openedx/edx-submissions
+    project: AU
+  - name: openedx/frontend-app-gradebook
+    project: AU
+  - name: openedx/frontend-app-learner-dashboard
+    project: AU
+  - name: openedx/frontend-app-learning
+    project: AU
+  - name: openedx/frontend-app-ora
+    project: AU
+  - name: openedx/frontend-app-ora-grading
+    project: AU
+  - name: openedx/super-csv
+    project: AU
+  - name: openedx/xqueue-watcher
+    project: AU
+
   # T&L
   - name: openedx/blockstore
     project: TNL
