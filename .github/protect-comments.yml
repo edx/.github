@@ -1,0 +1,43 @@
+# Prevent people from deleting comments from YAML files by accident.
+# asym-crypto-yaml is known to delete comments when it modifies YAML,
+# and people sometimes check in the results without looking too
+# closely. This results in important comments being lost.
+
+name: Preserve YAML comments (reusable)
+on:
+  workflow_call:
+    inputs:
+      pr_url:
+        description: "html_url of the PR to check"
+        type: string
+        required: true
+      comment_probe_regex:
+        description: >-
+          A Perl-compatible regex that will match a comment that should not
+          have been removed. Limited to running on full-line comments (not
+          line-end comments).
+        type: string
+        required: true
+defaults:
+  run:
+    shell: bash # making this explicit opts into -e -o pipefail
+jobs:
+  check_comment_deletion:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Detect deleted comments
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        PR_URL: "${{ inputs.pr_url }}"
+        COMMENT_RE: "${{ inputs.comment_probe_regex }}"
+      run: |
+        gh pr diff -- "$PR_URL" | (grep '^- *#' || true) > deleted-comments.txt
+
+        if grep --quiet -P -e "$COMMENT_RE" deleted-comments.txt; then
+            (tr '\n' ' ' | tee -a "$GITHUB_STEP_SUMMARY") <<MESSAGE
+        This PR appears to unintentionally delete comments. If you used a
+        tool to modify YAML and it removed comments, please undo the
+        unintended changes.
+        MESSAGE
+            exit 1
+        fi
