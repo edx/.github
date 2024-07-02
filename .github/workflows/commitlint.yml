@@ -25,7 +25,7 @@ jobs:
         id: check
         run: |
           if [[ ! -f commitlint.config.js ]]; then
-            echo "::set-output name=need::yes"
+            echo "need=yes" >> $GITHUB_OUTPUT
           fi
 
       - name: Download configuration if needed
