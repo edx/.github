@@ -1,0 +1,10 @@
+# Comments release expected version on PR based on commit messages
+
+name: Expected Release Version
+
+on:
+  - pull_request
+
+jobs:
+  commitlint:
+    uses: openedx/.github/.github/workflows/expected-release-version.yml@master

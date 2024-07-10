@@ -1,0 +1,7 @@
+{
+    "name": "Expected Release Version",
+    "description": "Comments release expected version on PR based on commit messages",
+    "iconName": "edx-workflow-template-icon",
+    "categories": [],
+    "filePatterns": []
+}
